@@ -1,0 +1,12 @@
+mv data/countries.json data/backup.countries.json
+wget https://coviddata.github.io/covid-api/v1/countries/stats.json
+mv stats.json data/countries.json
+
+mv data/regions.json data/backup.regions.json
+wget https://coviddata.github.io/covid-api/v1/regions/stats.json
+mv stats.json data/regions.json
+
+mv data/places.json data/backup.places.json
+wget https://coviddata.github.io/covid-api/v1/places/stats.json
+mv stats.json data/places.json
+

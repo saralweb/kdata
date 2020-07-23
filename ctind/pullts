@@ -1,0 +1,3 @@
+mv data/states_daily.json data/backup.states_daily.json
+wget https://api.covid19india.org/states_daily.json
+mv states_daily.json data/states_daily.json

@@ -1,0 +1,4 @@
+psql -U postgres corona < schema.sql
+psql -U postgres corona < ../cds/sql/schema.sql
+psql -U postgres corona < ../jhu/sql/schema.sql
+
