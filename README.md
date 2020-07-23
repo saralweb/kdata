@@ -1,5 +1,5 @@
 # kdata
-kavi's data extraction and analysis project
+data extraction and analysis project
 
 Setup:
 ------
