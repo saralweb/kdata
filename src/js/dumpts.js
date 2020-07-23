@@ -1,5 +1,5 @@
 var path = require('path')
-var db = require(path.join(__dirname, 'db'))
+var db = require(path.join(__dirname, '../db'))
 var fs = require('fs')
 
 var countryListCds =  ['India']
@@ -153,7 +153,7 @@ async function getCsv (dsname, params) {
 
       var ret = result.rows[0][dsname]
       var data = ret.data
-      filename = '/home/kavi/cdata/generated/' + ret.name + '.csv'
+      filename = path.join (__dirname, '../../generated/' + ret.name + '.csv')
       file = fs.openSync(filename, 'w')
 
       // first line - column headers
