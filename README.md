@@ -27,7 +27,7 @@ cd kdata
 
 npm install
 
-JHU extraction 
+**JHU extraction**
 
 cd jhu
 
@@ -43,7 +43,7 @@ loadnext loads just one day at a time after determining the last day loaded
 
 You will need to run loadnext many times, until you catch up. 
 
-Covid19India extraction
+**Covid19India extraction**
 
 cd ctind
 
@@ -55,7 +55,7 @@ cd ../
 
 loadts is naive, it drops all ctind data and reloads from latest pull.
 
-Analysis
+**Analysis**
 
 cd src/js
 
@@ -69,6 +69,7 @@ psql -U postgres corona < icfr_dump.sql
 
 cd ../../
 
+-------------------
 
 
 The automation of these steps is work in progress and will be documented here as soon as available
