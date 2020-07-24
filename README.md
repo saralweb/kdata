@@ -19,8 +19,13 @@ git clone https://github.com/CSSEGISandData/2019-nCoV.git
 
 git clone https://github.com/saralweb/kdata.git
 
-
 Then create database "corona" and use schema under sql/schema_2020_07_22.sql to create its structure
+
+-------------
+
+cd kdata
+
+npm install
 
 JHU extraction 
 

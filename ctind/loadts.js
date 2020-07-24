@@ -1,5 +1,5 @@
 var path = require('path')
-var db = require(path.join(__dirname, '../js/db'))
+var db = require(path.join(__dirname, '../src/db'))
 var fs = require('fs')
 
 
