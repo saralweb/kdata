@@ -4,8 +4,11 @@ data extraction and analysis project
 Pre-requisites
 --------------
 nodejs 10.15.0 +
+
 postgresql 11.2 +
+
 plv8 2.3.11 +
+
 git 2.19.1 +
 
 Developed and tested on Fedora Linux 27 64 bit
