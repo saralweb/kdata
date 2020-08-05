@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION jhu.load_next_day () returns jsonb AS $$
 
-  var path_prefix = '/home/kavi/cdata'
+  var path_prefix = '/var/www/html/kdata'
   var base_date = '2020-01-22'
 
   var column_sets = {

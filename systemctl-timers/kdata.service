@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily kdata generation
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/kdata
+User=root
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=multi-user.target

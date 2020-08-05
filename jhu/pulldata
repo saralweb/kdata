@@ -1,4 +1,5 @@
-cd /home/kavi/2019-nCoV
+cd /var/www/html/2019-nCoV
 git pull
-cp -f csse_covid_19_data/csse_covid_19_daily_reports/*.csv /home/kavi/cdata/jhu/data/
-cd /home/kavi/cdata/jhu
+cp -f csse_covid_19_data/csse_covid_19_daily_reports/*.csv /tmp/kdata/jhu/data/
+cd /var/www/html/kdata/jhu
+

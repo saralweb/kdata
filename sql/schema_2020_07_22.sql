@@ -93,11 +93,8 @@ ALTER TYPE public.cfr_record OWNER TO postgres;
 -- Name: load_next_day(); Type: FUNCTION; Schema: jhu; Owner: postgres
 --
 
-CREATE FUNCTION jhu.load_next_day() RETURNS jsonb
-    LANGUAGE plv8
-    AS $_$
-
-  var path_prefix = '/home/kavi/cdata'
+CREATE OR REPLACE FUNCTION jhu.load_next_day() RETURNS jsonb AS $_$
+  var path_prefix = '/tmp/kdata'
   var base_date = '2020-01-22'
 
   var column_sets = {
@@ -138,22 +135,25 @@ CREATE FUNCTION jhu.load_next_day() RETURNS jsonb
       copy_cmd = 'copy jhu.timeseries ( ' + colspec[2]  + '  ) from \'' + filename + '\'  csv header;'
     }
   })
-  
-  if (copy_cmd != null) {
-    plv8.elog(NOTICE, copy_cmd)
-    var ret = plv8.execute (copy_cmd);
-    var uret = plv8.execute ('update jhu.timeseries set date = $1 where date is null', [next_date])
-    result.inserts = ret
-    result.updates = uret
-    result.message = 'OK'
+  try { 
+    if (copy_cmd != null) {
+      plv8.elog(NOTICE, copy_cmd)
+      var ret = plv8.execute (copy_cmd);
+      var uret = plv8.execute ('update jhu.timeseries set date = $1 where date is null', [next_date])
+      result.inserts = ret
+      result.updates = uret
+      result.message = 'OK'
+    }
+    else {
+      result.message = 'ERROR colspec not found for next_date' 
+    }
+    return result; 
   }
-  else {
-    result.message = 'ERROR colspec not found for next_date' 
+  catch(err) {
+    return err
   }
 
-  return result; 
-
-$_$;
+$_$ LANGUAGE plv8;
 
 
 ALTER FUNCTION jhu.load_next_day() OWNER TO postgres;
@@ -162,7 +162,7 @@ ALTER FUNCTION jhu.load_next_day() OWNER TO postgres;
 -- Name: cfr_analysis(text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.cfr_analysis(country text) RETURNS SETOF public.cfr_record
+CREATE OR REPLACE FUNCTION public.cfr_analysis(country text) RETURNS SETOF public.cfr_record
     LANGUAGE plv8
     AS $_$
 
@@ -201,7 +201,7 @@ ALTER FUNCTION public.cfr_analysis(country text) OWNER TO postgres;
 -- Name: country_agg(jsonb); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.country_agg(params jsonb) RETURNS jsonb
+CREATE OR REPLACE FUNCTION public.country_agg(params jsonb) RETURNS jsonb
     LANGUAGE plv8
     AS $_$
 
@@ -260,7 +260,7 @@ ALTER FUNCTION public.country_agg(params jsonb) OWNER TO postgres;
 -- Name: country_state_agg(jsonb); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.country_state_agg(params jsonb) RETURNS jsonb
+CREATE OR REPLACE FUNCTION public.country_state_agg(params jsonb) RETURNS jsonb
     LANGUAGE plv8
     AS $_$
 
@@ -345,7 +345,7 @@ ALTER FUNCTION public.country_state_agg(params jsonb) OWNER TO postgres;
 -- Name: country_state_county_agg(jsonb); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.country_state_county_agg(params jsonb) RETURNS jsonb
+CREATE OR REPLACE FUNCTION public.country_state_county_agg(params jsonb) RETURNS jsonb
     LANGUAGE plv8
     AS $_$
 
@@ -396,7 +396,7 @@ ALTER FUNCTION public.country_state_county_agg(params jsonb) OWNER TO postgres;
 -- Name: get_country_config(text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.get_country_config(country text) RETURNS jsonb
+CREATE OR REPLACE FUNCTION public.get_country_config(country text) RETURNS jsonb
     LANGUAGE plv8
     AS $$
   var countryListJhu =  {
@@ -494,7 +494,7 @@ ALTER FUNCTION public.get_country_config(country text) OWNER TO postgres;
 -- Name: row2csv(json); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.row2csv(robj json) RETURNS text
+CREATE OR REPLACE FUNCTION public.row2csv(robj json) RETURNS text
     LANGUAGE plv8
     AS $$
 
@@ -516,7 +516,7 @@ ALTER FUNCTION public.row2csv(robj json) OWNER TO postgres;
 -- Name: row2csvheader(json); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.row2csvheader(robj json) RETURNS text
+CREATE OR REPLACE FUNCTION public.row2csvheader(robj json) RETURNS text
     LANGUAGE plv8
     AS $$
 
@@ -538,7 +538,7 @@ ALTER FUNCTION public.row2csvheader(robj json) OWNER TO postgres;
 -- Name: row2csvline(json); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.row2csvline(robj json) RETURNS text
+CREATE OR REPLACE FUNCTION public.row2csvline(robj json) RETURNS text
     LANGUAGE plv8
     AS $$
 
@@ -560,7 +560,7 @@ ALTER FUNCTION public.row2csvline(robj json) OWNER TO postgres;
 -- Name: state_agg_clause(text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.state_agg_clause(country text) RETURNS text
+CREATE OR REPLACE FUNCTION public.state_agg_clause(country text) RETURNS text
     LANGUAGE plv8
     AS $$
   var countryListJhu =  [
@@ -633,7 +633,7 @@ ALTER FUNCTION public.state_agg_clause(country text) OWNER TO postgres;
 -- Name: state_check(text, text, text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.state_check(country text, state text, date text) RETURNS boolean
+CREATE OR REPLACE FUNCTION public.state_check(country text, state text, date text) RETURNS boolean
     LANGUAGE plv8
     AS $$
   return plv8.find_function('get_country_config')(country).stateCheck(state, date)

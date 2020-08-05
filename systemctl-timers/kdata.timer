@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily kdata generation
+
+[Timer]
+OnCalendar=*-*-* 10:20:00
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=multi-user.target
+

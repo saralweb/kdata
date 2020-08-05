@@ -8,7 +8,9 @@
   "dependencies": {
     "pg": "^7.18.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodegit": "^0.27.0"
+  },
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
@@ -19,3 +21,4 @@
     "not ie <= 8"
   ]
 }
+

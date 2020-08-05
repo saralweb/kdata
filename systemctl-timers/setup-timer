@@ -1,0 +1,6 @@
+cp kdata /usr/bin/
+cp kdata.timer /usr/lib/systemd/system/
+cp kdata.service /usr/lib/systemd/system/
+systemctl enable kdata.timer
+systemctl start kdata.timer
+
