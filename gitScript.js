@@ -124,6 +124,6 @@ function dateConverter(date) {
         let indiaTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' } );
         date = new Date(indiaTime);
     }
-    return date;
+    return date.toDateString();;
 }
 main();
