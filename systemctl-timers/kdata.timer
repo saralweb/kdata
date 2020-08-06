@@ -2,7 +2,7 @@
 Description=Daily kdata generation
 
 [Timer]
-OnCalendar=*-*-* 10:20:00
+OnCalendar=*-*-* 10:30:00
 
 [Install]
 WantedBy=multi-user.target
