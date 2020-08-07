@@ -10,15 +10,15 @@ async function main() {
         let filepaths = await gitStatus(repo);
         let filteredPath = filterFilePaths(filepaths);
         console.log(filteredPath);
-	if(filteredPath !== null && filteredPath.length > 0) {
+	    if(filteredPath !== null && filteredPath.length > 0) {
             let oid = await gitAdd(repo,filteredPath);
             let commitId = await gitCommit(repo,oid);
             console.log('New Commit Id :',commitId);
             await gitPush(repo);
-	}
-	else {
-	    console.log('No file changed in these folders: ',dirNames);
-	}
+	    }
+	    else {
+	        console.log('No file changed in these folders: ',dirNames);
+    	}
     }
     catch(err) {
         throw err;
