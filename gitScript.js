@@ -42,6 +42,7 @@ async function gitPush(repo) {
     try{
 	let creds = JSON.parse(fs.readFileSync(path.join(__dirname, 'git_credentials.json')));
         let refs = [`refs/heads/${creds.branch}:refs/heads/${creds.branch}`];
+	console.log('Refs branch:',refs)
         let remote = await nodegit.Remote.lookup(repo,'origin');
         let fetchOpts = {
           callbacks: {
