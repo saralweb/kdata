@@ -10,10 +10,15 @@ async function main() {
         let filepaths = await gitStatus(repo);
         let filteredPath = filterFilePaths(filepaths);
         console.log(filteredPath);
-        let oid = await gitAdd(repo,filteredPath);
-        let commitId = await gitCommit(repo,oid);
-        console.log('New Commit Id :',commitId);
-        await gitPush(repo);
+	if(filteredPath !== null && filteredPath.length > 0) {
+            let oid = await gitAdd(repo,filteredPath);
+            let commitId = await gitCommit(repo,oid);
+            console.log('New Commit Id :',commitId);
+            await gitPush(repo);
+	}
+	else {
+	    console.log('No file changed in these folders: ',dirNames);
+	}
     }
     catch(err) {
         throw err;
@@ -35,7 +40,8 @@ function filterFilePaths(filepaths) {
 
 async function gitPush(repo) {
     try{
-        let refs = ["refs/heads/master:refs/heads/master"];
+	let creds = JSON.parse(fs.readFileSync(path.join(__dirname, 'git_credentials.json')));
+        let refs = [`refs/heads/${creds.branch}:refs/heads/${creds.branch}`];
         let remote = await nodegit.Remote.lookup(repo,'origin');
         let fetchOpts = {
           callbacks: {
@@ -44,7 +50,6 @@ async function gitPush(repo) {
             },
             credentials: function(url, userName) {
                 try {
-                    let creds = JSON.parse(fs.readFileSync(path.join(__dirname, 'git_credentials.json')));
                     return nodegit.Cred.userpassPlaintextNew(creds.username,creds.password);
                 }
                 catch(err) {
