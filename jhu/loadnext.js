@@ -10,6 +10,7 @@ async function load() {
 	        console.log('start loading...');
             let result = (await client.query('select jhu.load_next_day()')).rows[0].load_next_day;
 	        if(result.code === 16908805) {
+                console.log('no more load_next_day..')
 		        break;
 	        }
 	        console.log("result:",result);
