@@ -49,6 +49,21 @@ const datasets = [
   { proc: 'country_agg', 
     args: {col: 'deaths', op: 'agr5', countries: countryListJhu,   source: 'jhu'}
   },
+  { proc : 'country_agg',
+    args: {col: 'cases', op: 'rate', countries: countryListJhu,   source: 'jhu'}
+  },
+  { proc: 'country_agg',
+    args: {col: 'deaths', op: 'rate', countries: countryListJhu,   source: 'jhu'}
+  },
+  { proc: 'country_agg',
+    args: {col: 'recovered', op: 'rate', countries: countryListJhu,   source: 'jhu'}
+  },
+  { proc: 'country_state_agg',
+    args: { country: 'US', col: 'cases', op: 'rate',   states: statesListUS_JHU,  source: 'jhu'}
+  },
+  { proc: 'country_state_agg',
+    args: { country: 'US', col: 'deaths', op: 'rate',    states: statesListUS_JHU, source: 'jhu'}
+  },
 
   { proc: 'country_state_agg', 
     args: { country: 'US', col: 'cases', op: 'sum',  states: statesListUS_JHU, source: 'jhu'}
@@ -93,7 +108,6 @@ const datasets = [
   { proc: 'country_state_county_agg', 
     args: { country: 'US', state: 'New York', col: 'cases', op: 'sum',  source: 'jhu'}
   },
-
   { proc: 'country_state_county_agg', 
     args: { country: 'US', state: 'New York', col: 'deaths', op: 'sum',  source: 'jhu'}
   },
@@ -101,7 +115,6 @@ const datasets = [
   { proc: 'country_state_county_agg', 
     args: { country: 'US', state: 'Illinois', col: 'cases', op: 'sum',  source: 'jhu'}
   },
-
   { proc: 'country_state_county_agg', 
     args: { country: 'US', state: 'Illinois', col: 'deaths', op: 'sum',  source: 'jhu'}
   }

@@ -226,11 +226,16 @@ CREATE OR REPLACE FUNCTION public.country_agg(params jsonb) RETURNS jsonb
   var dgrCmd = ()=>'select date, case when lagged_val > 0 then ((current_val - lagged_val)/lagged_val)*100 else 0 end as dgr from lagged_cte'
   var agr5Cmd = ()=>'select  date, ( dgr + lag(dgr,1) over () + lag(dgr,2) over() + lag(dgr,3) over() + lag(dgr,4) over() ) / 5 as agr5 from dgr_cte'
 
+  var rateCmd = () => 'select date, sum - lag(sum) over (order by date) as rate from sum_cte order by date asc'
   var cmdTable = {
     sum : {},
     dgr : {},
-    agr5 : {}
+    agr5 : {},
+    rate : {}
   }
+  cmdTable.rate['cases'] = (country)=>'with base_cte as (' + baseCmd() + '), sum_cte as (' + sumCmd(country, 'cases') + ')' + rateCmd()
+  cmdTable.rate['deaths'] = (country)=>'with base_cte as (' + baseCmd() + '), sum_cte as (' + sumCmd(country, 'deaths') + ')' + rateCmd()
+  cmdTable.rate['recovered'] = (country)=>'with base_cte as (' + baseCmd() + '), sum_cte as (' + sumCmd(country, 'recovered') + ')' + rateCmd()
   cmdTable.sum['cases'] = (country)=>'with base_cte as (' + baseCmd() + ') ' + sumCmd(country, 'cases')
   cmdTable.sum['deaths'] = (country)=>'with base_cte as (' + baseCmd() + ') ' + sumCmd(country, 'deaths')
   cmdTable.sum['recovered'] = (country)=>'with base_cte as (' + baseCmd() + ') ' + sumCmd(country, 'recovered')
@@ -299,11 +304,17 @@ CREATE OR REPLACE FUNCTION public.country_state_agg(params jsonb) RETURNS jsonb
   var dgrCmd = ()=>'select date, case when lagged_val > 0 then ((current_val - lagged_val)/lagged_val)*100 else 0 end as dgr from lagged_cte'
   var agr5Cmd = ()=>'select  date, ( dgr + lag(dgr,1) over () + lag(dgr,2) over() + lag(dgr,3) over() + lag(dgr,4) over() ) / 5 as agr5 from dgr_cte'
 
+  var rateCmd = () => 'select date, sum - lag(sum) over (order by date) as rate from sum_cte order by date asc'
   var cmdTable = {
     sum : {},
     dgr : {},
-    agr5 : {}
+    agr5 : {},
+    rate : {}
   }
+  cmdTable.rate['cases'] = (country)=>'with base_cte as (' + baseCmd() + '), sum_cte as (' + sumCmd(country, 'cases') + ')' + rateCmd()
+  cmdTable.rate['deaths'] = (country)=>'with base_cte as (' + baseCmd() + '), sum_cte as (' + sumCmd(country, 'deaths') + ')' + rateCmd()
+  cmdTable.rate['recovered'] = (country)=>'with base_cte as (' + baseCmd() + '), sum_cte as (' + sumCmd(country, 'recovered') + ')' + rateCmd()
+
   cmdTable.sum['cases'] = (country)=>'with base_cte as (' + baseCmd() + ') ' + sumCmd(country, 'cases')
   cmdTable.sum['deaths'] = (country)=>'with base_cte as (' + baseCmd() + ') ' + sumCmd(country, 'deaths')
   cmdTable.sum['recovered'] = (country)=>'with base_cte as (' + baseCmd() + ') ' + sumCmd(country, 'recovered')
