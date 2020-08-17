@@ -1,1 +1,0 @@
-psql -U postgres corona -c "select jhu.load_next_day();"

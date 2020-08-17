@@ -1,3 +1,0 @@
-psql -U postgres corona -c "delete from ctind.timeseries"
-
-node loadts.js
