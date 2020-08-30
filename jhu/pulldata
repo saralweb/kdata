@@ -1,5 +1,0 @@
-cd /var/www/html/2019-nCoV
-git pull
-cp -f csse_covid_19_data/csse_covid_19_daily_reports/*.csv /tmp/kdata/jhu/data/
-cd /var/www/html/kdata/jhu
-
