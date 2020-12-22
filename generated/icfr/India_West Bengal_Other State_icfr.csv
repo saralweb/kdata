@@ -1,4 +1,2 @@
 "date","cases","resolve_date","prior_deaths","deaths","prior_resolutions","resolutions","days_to_resolve","i_cfr"
-"2020-06-23",65,"2020-06-28",3,3,61,66,5,"0.%"
-"2020-06-24",65,"2020-06-28",3,3,62,66,4,"0.%"
 "2020-06-28",65,"2020-06-28",3,3,66,66,0,"-"
